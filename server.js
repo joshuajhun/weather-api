@@ -1,22 +1,23 @@
-const express  = require('express')
-var app        = express()
-var bodyParser = require('body-parser');
-
+const express         = require('express')
+const app             = express()
+const bodyParser      = require('body-parser');
+const http            = require('http').Server(app);
+const cors            = require('express-cors');
+const port            = process.env.PORT || 8080
+const router          = express.Router();
+const weather         = require('./weather-stubs')
+app.locals.title      = 'weather-api'
+app.locals.weather    = []
+app.use('/api', router)
 app.use(bodyParser.urlencoded({extended: true}));
-
+app.use(bodyParser.json());
+app.use(cors());
 app.use(bodyParser.json());
 
-var port = process.env.PORT || 8080
-
-var router = express.Router();
-
 router.get('/', function(req, res){
-  res.json({message: 'testing out this yung api'})
+  debugger;
+  res.json(weather)
 });
-
-
-
-app.use('/api', router)
 
 app.listen(port)
 
