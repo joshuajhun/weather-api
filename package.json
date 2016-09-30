@@ -16,6 +16,8 @@
     "express-cors": "0.0.3",
     "fs": "0.0.1-security",
     "locus": "^1.2.0",
+    "lodash": "^4.16.2",
+    "moment": "^2.15.1",
     "mongoose": "^4.6.1",
     "nodemon": "^1.10.2"
   }
