@@ -2,7 +2,7 @@ const express         = require('express')
 const app             = express()
 const bodyParser      = require('body-parser');
 const http            = require('http').Server(app);
-const cors            = require('express-cors');
+const cors            = require('cors')
 const port            = process.env.PORT || 8080
 const router          = express.Router();
 
