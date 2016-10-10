@@ -21,8 +21,7 @@ router.get('/weather', function(request, response){
 });
 
 router.get('/weather/:location', function(request, response){
-  eval(locus)
-  const {location} = request.params
+  const location = request.params.location
   const city = weather.filter(function(place){
     return place.location === location
   })
