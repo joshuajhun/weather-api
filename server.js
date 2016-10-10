@@ -5,14 +5,14 @@ const http            = require('http').Server(app);
 const cors            = require('express-cors');
 const port            = process.env.PORT || 8080
 const router          = express.Router();
-require('locus')
+
+router.use(cors());
+app.use(cors());
 
 app.locals.title      = 'weather-api'
 app.use('/api', router)
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-router.use(cors());
-app.use(cors());
 
 const weather         = require('./weather-stubs')
 
