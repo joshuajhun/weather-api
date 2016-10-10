@@ -7,20 +7,6 @@ var weather = [
   date: generateDate(19),
 },
 
-// {
-//   location: 'denver',
-//   temp: generateTemp(),
-//   weatherType: {
-//     type: generateType(),
-//     scale: 1,// 1-3 based off of that they will render a specific image ,
-//     chance: .30 //generate a decimil
-//   },
-//   date: generateDate(20),
-//   hourly: {
-//         // this should be a nested part of the api response. It should cause students to utilize multiple or
-//         // same function
-//   },
-// },
 
 {
   location:'denver',
