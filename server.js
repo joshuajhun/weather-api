@@ -5,7 +5,7 @@ const http            = require('http').Server(app);
 const cors            = require('cors')
 const port            = process.env.PORT || 8080
 const router          = express.Router();
-
+require('locus')
 router.use(cors());
 app.use(cors());
 
@@ -25,7 +25,7 @@ router.get('/weather/:location', function(request, response){
   const city = weather.filter(function(place){
     return place.location === location
   })
-  if(!city){return response.status(404).send({ error: `city not found` })}
+  if(city){return response.json(city)}
   return response.sendStatus(404)
 });
 
