@@ -6,8 +6,6 @@ var weather = [
   location: "denver",
   date: generateDate(19),
 },
-
-
 {
   location:'denver',
 
@@ -195,12 +193,12 @@ function formatObjects(){
     weather['weatherType']        = {type: generateType(weather)}
     weather.weatherType['scale']  = generateScale(weather.weatherType.type)
     weather.weatherType['chance'] = generateChance()
-    var high = generateTemp(weather.weatherType.type)
+    var high                      = generateTemp(weather.weatherType.type)
     weather['temp']               = {high: high, low: high - 20}
-    weather['hourly']            = {timeBreakDown: generateHourly.call(weather)}
+    weather['hourly']             = {timeBreakDown: generateHourly.call(weather)}
     return weather
   })
-return weather
+  return weather
 }
 
 function generateDate(date){
@@ -208,57 +206,44 @@ function generateDate(date){
 }
 
 function generateType(weather){
-  if(weather.location === 'denver' || 'castle-rock'){
-    var weatherType =  ['thunder storms', 'cloudy', 'rain', 'snow', 'sunny', 'windy']
-  }
-
-  if (weather.location === 'san-diego'){
-    var weatherType =  ['cloudy', 'rain','sunny']
-  }
-
-  if (weather.location === 'san-fransico'){
-    var weatherType =  ['cloudy', 'rain','sunny', 'windy', 'foggy']
-  }
+  var weatherType = determainLocation(weather.location)
   return _.shuffle(weatherType).pop()
 }
 
+function determainLocation(location){
+  var weatherLocations  =[
+    { location:'san-diego', weather: ['cloudy', 'rain','sunny'] },
+    { location:'denver', weather: ['thunder storms', 'cloudy', 'rain', 'snow', 'sunny', 'windy'] },
+    { location:'castle-rock', weather: ['thunder storms', 'cloudy', 'rain', 'snow', 'sunny', 'windy'] },
+    { location:'san-fransico', weather: ['cloudy', 'rain','sunny', 'windy', 'foggy'] }
+  ]
+  var locationWeather = weatherLocations.filter(function(weatherObject){
+    return weatherObject.location === location
+  })
+  return locationWeather[0].weather
+}
+
 function generateTemp(weatherType){
+  var weatherTypes = [
+    {type: 'snow', temp: generateRandomTemp(20,30) },
+    {type: 'rain', temp: generateRandomTemp(60,70) },
+    {type: 'cloudy', temp: generateRandomTemp(60,70) },
+    {type: 'foggy', temp: generateRandomTemp(60,70) },
+    {type: 'windy', temp: generateRandomTemp(60,70) },
+    {type: 'sunny', temp: generateRandomTemp(60,100) },
+    {type: 'snow', temp: generateRandomTemp(70,80) },
+    {type: 'thunder storms', temp: generateRandomTemp(60,70) }
+  ]
+  generatedWeather = weatherTypes.filter(function(weather){
+    return weather.type === weatherType
+  })
+  return generatedWeather[0].temp
+}
 
-  if(weatherType === 'snow'){
-    var min = Math.ceil(20);
-    var max = Math.floor(32);
-  }
 
-  if (weatherType === 'rain'){
-    var min = Math.ceil(60)
-    var max = Math.ceil(70)
-  }
-
-  if (weatherType === 'thunder storms'){
-    var min = Math.ceil(60)
-    var max = Math.ceil(70)
-  }
-
-  if (weatherType === 'cloudy'){
-    var min = Math.ceil(60)
-    var max = Math.ceil(70)
-  }
-
-  if (weatherType === 'foggy'){
-    var min = Math.ceil(60)
-    var max = Math.ceil(70)
-  }
-
-  if (weatherType === 'sunny'){
-    var min = Math.ceil(60)
-    var max = Math.ceil(100)
-  }
-
-  if (weatherType === 'windy'){
-    var min = Math.ceil(70)
-    var max = Math.ceil(80)
-  }
-
+function generateRandomTemp (min, max){
+  var min = Math.ceil(min);
+  var max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
@@ -288,7 +273,7 @@ function generateHourly(){
       low ++
       object['hour' + i]  = { temp: low, type: this.weatherType.type }
       arrayOfHourlyObjects.push(object)
-    }else{
+    } else {
       high --
       object['hour' +  i] = { temp: high, type: this.weatherType.type }
       arrayOfHourlyObjects.push(object)
